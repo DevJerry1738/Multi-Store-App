@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_store_app/widgets/appBar_widgets.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
@@ -14,6 +16,7 @@ class VisitStore extends StatefulWidget {
 }
 
 class _VisitStoreState extends State<VisitStore> {
+  bool following = false;
   @override
   Widget build(BuildContext context) {
     CollectionReference suppliers =
@@ -44,6 +47,15 @@ class _VisitStoreState extends State<VisitStore> {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
           return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+              child: const Icon(
+                Icons.phone,
+                color: Colors.white,
+                size: 40,
+              ),
+              backgroundColor: Colors.green,
+            ),
             backgroundColor: Colors.blueGrey.shade100,
             appBar: AppBar(
               toolbarHeight: 100,
@@ -51,6 +63,7 @@ class _VisitStoreState extends State<VisitStore> {
                 'images/inapp/coverimage.jpg',
                 fit: BoxFit.cover,
               ),
+              leading: const YellowBackButton(),
               title: Row(
                 children: [
                   Container(
@@ -98,11 +111,28 @@ class _VisitStoreState extends State<VisitStore> {
                               color: Colors.yellow,
                               border:
                                   Border.all(width: 3, color: Colors.black)),
-                          child: const Center(
-                              child: Text(
-                            'follow +',
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                          )),
+                          child: widget.sid ==
+                                  FirebaseAuth.instance.currentUser!.uid
+                              ? MaterialButton(
+                                  onPressed: () {
+                                    setState(() {});
+                                  },
+                                  child: const Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [Text('Edit '), Icon(Icons.edit)],
+                                  ),
+                                )
+                              : MaterialButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      following = !following;
+                                    });
+                                  },
+                                  child: following == true
+                                      ? const Text('following')
+                                      : const Text('follow'),
+                                ),
                         )
                       ],
                     ),

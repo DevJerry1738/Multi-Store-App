@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:multi_store_app/minor_Screens/visit_store.dart';
 import 'package:multi_store_app/widgets/yellowbutton.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
@@ -119,8 +121,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                         IconButton(
                             onPressed: () {},
-                            icon: const Icon(
-                              Icons.favorite_border_outlined,
+                            icon: Icon(
+                              widget.proList['sid'] ==
+                                      FirebaseAuth.instance.currentUser!.uid
+                                  ? null
+                                  : Icons.favorite_border_outlined,
                               color: Colors.red,
                               size: 30,
                             )),
@@ -209,7 +214,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               children: [
                 Row(
                   children: [
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.store)),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VisitStore(
+                                        sid: widget.proList['sid'],
+                                      )));
+                        },
+                        icon: const Icon(Icons.store)),
                     const SizedBox(
                       width: 20,
                     ),

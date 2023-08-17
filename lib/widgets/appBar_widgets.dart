@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class AppBarBack extends StatelessWidget {
   const AppBarBack({
     Key? key,
@@ -10,6 +11,25 @@ class AppBarBack extends StatelessWidget {
       icon: Icon(
         Icons.arrow_back_ios_new,
         color: Colors.black,
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+  }
+}
+
+class YellowBackButton extends StatelessWidget {
+  const YellowBackButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        Icons.arrow_back_ios_new,
+        color: Colors.yellow,
       ),
       onPressed: () {
         Navigator.pop(context);
@@ -34,6 +54,7 @@ class AppBarTitle extends StatelessWidget {
           color: Colors.black,
           fontFamily: 'Acme',
           fontSize: 24,
-          letterSpacing: 1.5),);
+          letterSpacing: 1.5),
+    );
   }
 }

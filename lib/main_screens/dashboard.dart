@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:multi_store_app/dashboard_components/balance.dart';
 import 'package:multi_store_app/dashboard_components/edit_business.dart';
 import 'package:multi_store_app/dashboard_components/manage_products.dart';
-import 'package:multi_store_app/dashboard_components/my_store.dart';
 import 'package:multi_store_app/dashboard_components/stats.dart';
 import 'package:multi_store_app/dashboard_components/supplier_orders.dart';
 import 'package:multi_store_app/widgets/appBar_widgets.dart';
 
+import '../minor_Screens/visit_store.dart';
 import '../widgets/myDialogBox.dart';
 
 List<String> labels = [
@@ -19,8 +19,8 @@ List<String> labels = [
   'stats'
 ];
 
-const dashboardCateg = [
-  MyStore(),
+final dashboardCateg = [
+  VisitStore(sid: FirebaseAuth.instance.currentUser!.uid),
   SupplierOrders(),
   EditBusiness(),
   ManageProducts(),
@@ -63,8 +63,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Navigator.pop(context);
                     },
                     tapYes: () async {
-                      await FirebaseAuth.instance
-                          .signOut();
+                      await FirebaseAuth.instance.signOut();
                       Navigator.pop(context);
                       Navigator.pushReplacementNamed(
                           context, '/welcome_screen');
